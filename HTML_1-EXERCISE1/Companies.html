@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Big Companies</title>
+</head>
+<body>
+    <h1>For Big quantities</h1>
+    <p>If you're interested in my cards services, please fill out the form below:</p>
+
+    <form action="confirmation.html" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Your Name" required autocomplete="name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Your Email" required autocomplete="email">
+<br>
+        <label for="company">Company Name:</label>
+        <input type="text" id="company" name="company" placeholder="Your Company" required>
+
+        <label for="service">Service Interested In:</label>
+        <select id="service" name="service" required>
+            <option value="" disabled selected>Select quantity</option>
+            <option value="1000 pcs">1000 pieces</option>
+            <option value="2500 pcs">2500 pcs</option>
+            <option value="5000 pcs">5000 pcs</option>
+            <option value="More than 5000">More than 5000</option>
+        </select>
+<br>
+        <label for="Usage">Brief Business Details:</label>
+        <textarea id="Usage" name="Usage" placeholder="Tell me about your Business" required></textarea>
+<br>
+        <label>How did you hear about me?</label>
+        <ul>
+            <li>
+                <input type="radio" id="Social-media" name="how-heard" value="Social media">
+                <label for="Social-media">Social media</label>
+            </li>
+            <li>
+                <input type="radio" id="web-search" name="how-heard" value="Web Search">
+                <label for="web-search">Web Search</label>
+            </li>
+            <li>
+                <input type="radio" id="Real-life" name="how-heard" value="Real life">
+                <label for="Real-life">Real life</label>
+            </li>
+            <li>
+                <input type="radio" id="other" name="how-heard" value="Other">
+                <label for="other">Other</label>
+            </li>
+        </ul>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
