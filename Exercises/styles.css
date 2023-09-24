@@ -1,0 +1,50 @@
+:root {
+    --background-color: #111;
+    --text-color: #5b5b5b;
+    --link-color: #2d2d2d;
+    --table-bg-color: #333;
+}
+
+body {
+
+    font-family: 'YourSelectedFont', sans-serif;
+    
+    h1, h2, h3 {
+        font-weight: bold;
+    }
+    
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Poppins; /* Added font-family */
+    font-size: 30px; /* Added font-size */
+    font-style: normal; /* Added font-style */
+    font-weight: 400; /* Added font-weight */
+    line-height: normal; /* Added line-height */
+}
+
+a {
+    color: var(--link-color);
+}
+
+table {
+    background-color: var(--table-bg-color);
+    color: var(--text-color);
+}
+button {
+    background-color: #3498db; /* Default button color */
+    transition: background-color 0.3s ease; /* Transition the background color */
+}
+
+button:hover {
+    background-color: #2980b9; /* New button color on hover */
+}
+/* Hide the navbar items by default */
+.navbar-items {
+    display: none;
+}
+
+/* Style the hamburger icon */
+.hamburger {
+    /* Your hamburger icon styling */
+    cursor: pointer;
+}
