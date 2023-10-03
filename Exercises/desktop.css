@@ -1,0 +1,68 @@
+:root {
+    --desktop-background-color: rgb(105, 45, 234);
+    --desktop-text-color: rgb(12, 56, 78);
+    --desktop-link-color: rgb(90, 123, 210);
+    --desktop-table-bg-color: rgb(62, 50, 200);
+}
+
+body {
+    font-family: 'DesktopFont', sans-serif;
+    background-color: var(--desktop-background-color);
+    color: var(--desktop-text-color);
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+a {
+    color: var(--desktop-link-color);
+}
+
+table {
+    background-color: var(--desktop-table-bg-color);
+    color: var(--desktop-text-color);
+}
+
+button {
+    background-color: green;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(0, 89, 255);
+}
+
+.card-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.cards {
+    display: block;
+    margin-right: 20px;
+}
+
+.card {
+    position: static;
+    border: 2px solid #333;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: purple;
+    font-weight: 600;
+}
+
+.card-date {
+    color: rgb(0, 30, 255);
+    float: none;
+    font-style: italic;
+}
+
+.content {
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+}

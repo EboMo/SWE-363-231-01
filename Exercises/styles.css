@@ -1,25 +1,19 @@
 :root {
-    --background-color: #111;
-    --text-color: #5b5b5b;
-    --link-color: #2d2d2d;
-    --table-bg-color: #333;
+    --background-color: rgb(80, 80, 202);
+    --text-color: rgb(24, 24, 95);
+    --link-color: rgb(58, 58, 102);
+    --table-bg-color: rgb(41, 98, 164);
 }
 
 body {
-
     font-family: 'YourSelectedFont', sans-serif;
-    
-    h1, h2, h3 {
-        font-weight: bold;
-    }
-    
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: Poppins; /* Added font-family */
-    font-size: 30px; /* Added font-size */
-    font-style: normal; /* Added font-style */
-    font-weight: 400; /* Added font-weight */
-    line-height: normal; /* Added line-height */
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 a {
@@ -30,21 +24,37 @@ table {
     background-color: var(--table-bg-color);
     color: var(--text-color);
 }
+
 button {
-    background-color: #3498db; /* Default button color */
-    transition: background-color 0.3s ease; /* Transition the background color */
+    background-color: rgb(54, 54, 186);
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2980b9; /* New button color on hover */
-}
-/* Hide the navbar items by default */
-.navbar-items {
-    display: none;
+    background-color: rgb(31, 31, 66);
 }
 
-/* Style the hamburger icon */
-.hamburger {
-    /* Your hamburger icon styling */
-    cursor: pointer;
+.card-items {
+    display: block;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    position: relative;
+}
+
+.card-title {
+    color: rgb(74, 74, 110);
+}
+
+.card-date {
+    color: rgb(147, 147, 234);
+}
+
+.content {
+    content: "Best cards in town";
 }
