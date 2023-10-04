@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cell {
+            font-family: 'Arial', sans-serif;
+            font-size: 32px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #ddd;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .cell:hover {
+            background-color: #ddd;
+        }
+
+        .cell.X {
+            color: #2196F3;
+        }
+
+        .cell.O {
+            color: #F44336;
+        }
+
+        #turn {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        #reset {
+            display: block;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #reset:hover {
+            background-color: #45a049;
+        }
+
+        .winner-cell {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="turn">
+        Now it's <span>X</span>'s turn
+    </h1>
+    <!-- Board -->
+    <div class="board">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <button id="reset">Reset</button>
+
+    <script>
+        let turn = "X";
+        let gameEnded = false;
+        let winnerCells = [];
+        let cells = document.querySelectorAll(".cell");
+        let board = document.querySelector(".board");
+        let turnText = document.querySelector("#turn span");
+        let resetButton = document.querySelector("#reset");
+        
+        board.addEventListener("click", cellClicked);
+        resetButton.addEventListener("click", resetGame);
+        
+        function cellClicked(event) {
+            let cell = event.target;
+            if (!cell.innerText && !gameEnded) {
+                cell.innerText = turn;
+                
+                // Check for a win
+                if (checkWin()) {
+                    gameEnded = true;
+                    displayWinner();
+                } else if (checkDraw()) {
+                    gameEnded = true;
+                    turnText.innerText = "Draw";
+                } else {
+                    turn = turn === "X" ? "O" : "X";
+                    turnText.innerText = turn;
+                }
+            }
+        }
+        
+        function checkWin() {
+            const patterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                [0, 4, 8], [2, 4, 6] 
+            ];
+            
+            for (const pattern of patterns) {
+                const [a, b, c] = pattern;
+                
+                if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
+                    winnerCells = [a, b, c];
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        function checkDraw() {
+            return [...cells].every(cell => cell.innerText);
+        }
+        
+        function displayWinner() {
+            if (winnerCells.length > 0) {
+                turnText.innerText = `${cells[winnerCells[0]].innerText} wins!`;
+                
+                // Optionally, add a style to the winning cells (e.g., strike-through)
+                for (const index of winnerCells) {
+                    cells[index].classList.add("winner-cell");
+                }
+            }
+        }
+        
+        function resetGame() {
+            gameEnded = false;
+            turn = "X";
+            turnText.innerText = "X";
+            winnerCells = [];
+            
+            cells.forEach(cell => {
+                cell.innerText = "";
+                cell.classList.remove("winner-cell");
+            });
+        }
+    </script>
+</body>
+</html>
