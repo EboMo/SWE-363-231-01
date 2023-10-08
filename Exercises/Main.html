@@ -9,19 +9,43 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="desktop.css" media="screen and (min-width: 770px)">
     <style>
-        .content {
-            display: contents;
-            display: inline-table;
+        /* Existing styles go here */
+
+        /* Style for the help popup */
+        #help-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            display: none;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Style for the keyboard help button */
+        #help-popup-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
         }
 
-        @keyframes hide-loader {
-            0% { opacity: 1; }
-            100% { opacity: 0; display: none; }
+        /* Style to hide the help popup */
+        #help-popup.hidden {
+            display: none;
+        }
+
+        /* Style for the focus outline */
+        :focus {
+            outline: 2px solid #007bff;
+            outline-offset: 3px;
         }
     </style>
 </head>
@@ -35,12 +59,7 @@
     <div class="content">
         <div class="navbar">
             <div class="cards" id="cards-icon">
-                <div class="card">
-                    <h2 class="card-title">Ebo cards</h2>
-                    <p class="content">Best cards in town</p>
-                </div>
-
-
+                <!-- Cards will be added dynamically here -->
             </div>
             <ul class="navbar-items" id="navbar-items">
                 <li><a href="Main.html">Home</a></li>
@@ -53,11 +72,109 @@
         <!-- Second Page -->
         <a href="Products.html">To view the products</a>
         <!-- Contact Us Page -->
-        <a href="ContactUs.html"><p>Contact Us</p></a>
+        <a href="ContactUs.html">Contact Us</a>
         <!-- Company Offers Page -->
-        <a href="Companies.html"><p>Company offers</p></a>
+        <a href="Companies.html">Company offers</a>
         <!-- Table of interests -->
         <h1>About us</h1>
     </div>
+
+    <!-- Help Popup -->
+    <div id="help-popup" class="hidden">
+        <h2>Keyboard Navigation Instructions</h2>
+        <p>
+            - Press the Tab key to navigate through interactive elements.<br>
+            - Use the Enter key to activate links and buttons.<br>
+            - Press the Esc key to close this help popup.
+        </p>
+    </div>
+
+    <!-- Keyboard Help Button -->
+    <button id="help-popup-button" onclick="toggleHelpPopup()">Keyboard Help (Press Enter)</button>
+
+    <script>
+        const cardData = [
+            {
+                title: "Ebo cards",
+                content: "Best cards in town"
+            },
+            {
+                title: "Ebo Tables",
+                content: "Best Quality tables."
+            },
+        ];
+
+        function createCard(cardObject) {
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+
+            const title = document.createElement("h2");
+            title.classList.add("card-title");
+            title.textContent = cardObject.title;
+
+            const content = document.createElement("p");
+            content.classList.add("content");
+            content.textContent = cardObject.content;
+
+            cardDiv.appendChild(title);
+            cardDiv.appendChild(content);
+
+            return cardDiv;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const cardsContainer = document.getElementById("cards-icon");
+
+            cardData.forEach(function (cardObject) {
+                const card = createCard(cardObject);
+                cardsContainer.appendChild(card);
+            });
+        });
+
+        // Keyboard navigation and help popup functionality
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Tab") {
+                // Trap keyboard focus within the content area
+                const focusableElements = document.querySelectorAll('a, button, input, [tabindex]:not([tabindex="-1"])');
+                const firstFocusable = focusableElements[0];
+                const lastFocusable = focusableElements[focusableElements.length - 1];
+
+                if (!e.shiftKey && document.activeElement === lastFocusable) {
+                    e.preventDefault();
+                    firstFocusable.focus();
+                } else if (e.shiftKey && document.activeElement === firstFocusable) {
+                    e.preventDefault();
+                    lastFocusable.focus();
+                }
+            } else if (e.key === "Enter") {
+                if (document.activeElement === document.getElementById("help-popup-button")) {
+                    // Show/hide help popup
+                    toggleHelpPopup();
+                }
+            } else if (e.key === "Escape") {
+                // Close the help popup when Esc key is pressed
+                closeHelpPopup();
+            }
+        });
+
+        // Help popup elements
+        const helpPopup = document.getElementById("help-popup");
+
+        // JavaScript to toggle the help popup
+        function toggleHelpPopup() {
+            helpPopup.classList.toggle("hidden");
+            if (!helpPopup.classList.contains("hidden")) {
+                helpPopup.focus();
+            } else {
+                document.getElementById("help-popup-button").focus();
+            }
+        }
+
+        // Close the help popup when Esc key is pressed
+        function closeHelpPopup() {
+            helpPopup.classList.add("hidden");
+            document.getElementById("help-popup-button").focus();
+        }
+    </script>
 </body>
 </html>

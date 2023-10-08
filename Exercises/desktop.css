@@ -1,8 +1,8 @@
 :root {
-    --desktop-background-color: rgb(105, 45, 234);
-    --desktop-text-color: rgb(12, 56, 78);
-    --desktop-link-color: rgb(90, 123, 210);
-    --desktop-table-bg-color: rgb(62, 50, 200);
+    --desktop-background-color: rgb(136, 136, 136);
+    --desktop-text-color: rgb(86, 86, 86);
+    --desktop-link-color: rgb(109, 109, 109);
+    --desktop-table-bg-color: rgb(48, 48, 48);
 }
 
 body {
@@ -26,12 +26,12 @@ table {
 }
 
 button {
-    background-color: green;
+    background-color: rgb(83, 83, 83);
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: rgb(0, 89, 255);
+    background-color: rgb(62, 62, 62);
 }
 
 .card-items {
@@ -53,12 +53,12 @@ button:hover {
 }
 
 .card-title {
-    color: purple;
+    color: rgb(71, 71, 71);
     font-weight: 600;
 }
 
 .card-date {
-    color: rgb(0, 30, 255);
+    color: rgb(0, 0, 0);
     float: none;
     font-style: italic;
 }
