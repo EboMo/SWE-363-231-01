@@ -8,6 +8,8 @@
     <meta name="keywords" content="Cards, games, Board games">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="desktop.css" media="screen and (min-width: 770px)">
+    <link rel="stylesheet" href="signature.css"> <!-- Add a new stylesheet for the signature functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script> <!-- Add Three.js library -->
     <style>
         /* Existing styles go here */
 
@@ -46,6 +48,11 @@
         :focus {
             outline: 2px solid #007bff;
             outline-offset: 3px;
+        }
+
+        /* Additional style for the signature canvas */
+        #signature-canvas {
+            border: 2px solid #000;
         }
     </style>
 </head>
@@ -91,6 +98,13 @@
 
     <!-- Keyboard Help Button -->
     <button id="help-popup-button" onclick="toggleHelpPopup()">Keyboard Help (Press Enter)</button>
+
+    <!-- Exercise 2:-->
+    <canvas id="signature-canvas" width="400" height="200"></canvas>
+    <button id="submitSignatureButton">Submit Signature</button>
+
+    <!-- Exercise 3: -->
+    <canvas id="screensaver" style="position: fixed; top: 0; left: 0; z-index: 10000;"></canvas>
 
     <script>
         const cardData = [
@@ -175,6 +189,68 @@
             helpPopup.classList.add("hidden");
             document.getElementById("help-popup-button").focus();
         }
+
+        // Exercise 2
+        const signatureCanvas = document.getElementById("signature-canvas");
+        const signatureContext = signatureCanvas.getContext("2d");
+        const submitSignatureButton = document.getElementById("submitSignatureButton");
+
+        signatureCanvas.addEventListener("mousemove", drawSignature);
+        let isDrawing = false;
+
+        function drawSignature(e) {
+            if (!isDrawing) return;
+            signatureContext.lineWidth = 2;
+            signatureContext.lineCap = "round";
+            signatureContext.strokeStyle = "#000";
+            signatureContext.lineTo(e.clientX - signatureCanvas.offsetLeft, e.clientY - signatureCanvas.offsetTop);
+            signatureContext.stroke();
+        }
+
+        signatureCanvas.addEventListener("mousedown", () => {
+            isDrawing = true;
+            signatureContext.beginPath();
+            signatureContext.moveTo(event.clientX - signatureCanvas.offsetLeft, event.clientY - signatureCanvas.offsetTop);
+        });
+
+        signatureCanvas.addEventListener("mouseup", () => {
+            isDrawing = false;
+        });
+
+        submitSignatureButton.addEventListener("click", () => {
+            // Convert the canvas content to an image and submit it (you may want to send it to a server)
+            const signatureImage = signatureCanvas.toDataURL("image/png");
+            console.log("Signature data URL:", signatureImage);
+        });
+
+        // Exercise 3
+        let screensaverTimeout;
+
+        function initScreensaver() {
+            const screensaverCanvas = document.getElementById("screensaver");
+            const renderer = new THREE.WebGLRenderer({ canvas: screensaverCanvas });
+            const scene = new THREE.Scene();
+
+            // Function to animate the screensaver
+            function animateScreensaver() {
+                // Update animations and render the scene
+                renderer.render(scene, camera);
+                screensaverTimeout = setTimeout(activateScreensaver, 60000); // Set timeout for 1 minute of inactivity
+            }
+
+            // Function to activate the screensaver
+            function activateScreensaver() {
+                clearTimeout(screensaverTimeout);
+                // Display the screensaver and hide other content
+                screensaverCanvas.style.display = "block";
+                document.body.style.overflow = "hidden"; // Hide scrollbars
+                animateScreensaver();
+            }
+
+            activateScreensaver();
+        }
+
+        initScreensaver();
     </script>
 </body>
 </html>
