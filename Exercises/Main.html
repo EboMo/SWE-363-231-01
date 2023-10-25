@@ -104,15 +104,15 @@
         <!-- Products will be added here dynamically -->
     </div>
 
-    <!-- Exercise 2: Functions and Signature Canvas -->
+    <!-- Exercise 2: -->
     <canvas id="signature-canvas" width="400" height="200"></canvas>
     <button id="submitSignatureButton">Submit Signature</button>
 
-    <!-- Exercise 3: 3D Screensaver using Three.js -->
+    <!-- Exercise 3: -->
     <canvas id="screensaver" style="position: fixed; top: 0; left: 0; z-index: 10000;"></canvas>
 
     <script>
-        // Exercise 1: Objects/Classes
+        // Exercise 1
         class Product {
             constructor(title, description, price) {
                 this.title = title;
@@ -157,7 +157,7 @@
             });
         });
 
-        // Exercise 2: Functions and Signature Canvas
+        // Exercise 2: 
         const signatureCanvas = document.getElementById("signature-canvas");
         const signatureContext = signatureCanvas.getContext("2d");
         const submitSignatureButton = document.getElementById("submitSignatureButton");
@@ -186,7 +186,7 @@
 
         submitSignatureButton.addEventListener("click", submitSignature);
 
-        // Exercise 3: 3D Screensaver using Three.js
+        // Exercise 3
         let screensaverTimeout;
 
         function initScreensaver() {
@@ -194,8 +194,6 @@
             const renderer = new THREE.WebGLRenderer({ canvas: screensaverCanvas });
             const scene = new THREE.Scene();
 
-            // Create and add your 3D objects to the scene here using Three.js
-
             function animateScreensaver() {
                 renderer.render(scene, camera);
-                screensaverTimeout = setTimeout(activateScreensaver, 60000); // Set timeout for 
+                screensaverTimeout = setTimeout(activateScreensaver, 60000); 
