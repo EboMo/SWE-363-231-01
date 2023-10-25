@@ -99,98 +99,65 @@
     <!-- Keyboard Help Button -->
     <button id="help-popup-button" onclick="toggleHelpPopup()">Keyboard Help (Press Enter)</button>
 
-    <!-- Exercise 2:-->
+    <!-- Exercise 1: Objects/Classes - Product Class and Product List -->
+    <div class="products" id="products-list">
+        <!-- Products will be added here dynamically -->
+    </div>
+
+    <!-- Exercise 2: Functions and Signature Canvas -->
     <canvas id="signature-canvas" width="400" height="200"></canvas>
     <button id="submitSignatureButton">Submit Signature</button>
 
-    <!-- Exercise 3: -->
+    <!-- Exercise 3: 3D Screensaver using Three.js -->
     <canvas id="screensaver" style="position: fixed; top: 0; left: 0; z-index: 10000;"></canvas>
 
     <script>
-        const cardData = [
-            {
-                title: "Ebo cards",
-                content: "Best cards in town"
-            },
-            {
-                title: "Ebo Tables",
-                content: "Best Quality tables."
-            },
-        ];
-
-        function createCard(cardObject) {
-            const cardDiv = document.createElement("div");
-            cardDiv.classList.add("card");
-
-            const title = document.createElement("h2");
-            title.classList.add("card-title");
-            title.textContent = cardObject.title;
-
-            const content = document.createElement("p");
-            content.classList.add("content");
-            content.textContent = cardObject.content;
-
-            cardDiv.appendChild(title);
-            cardDiv.appendChild(content);
-
-            return cardDiv;
+        // Exercise 1: Objects/Classes
+        class Product {
+            constructor(title, description, price) {
+                this.title = title;
+                this.description = description;
+                this.price = price;
+            }
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const cardsContainer = document.getElementById("cards-icon");
+        // Create product objects
+        const products = [
+            new Product("Ebo cards", "Best cards in town", 10.99),
+            new Product("Ebo Tables", "Best Quality tables", 299.99),
+        ];
 
-            cardData.forEach(function (cardObject) {
-                const card = createCard(cardObject);
-                cardsContainer.appendChild(card);
+        function createProductElement(product) {
+            const productDiv = document.createElement("div");
+            productDiv.classList.add("product");
+
+            const title = document.createElement("h3");
+            title.textContent = product.title;
+
+            const description = document.createElement("p");
+            description.textContent = product.description;
+
+            const price = document.createElement("p");
+            price.textContent = `Price: $${product.price}`;
+
+            productDiv.appendChild(title);
+            productDiv.appendChild(description);
+            productDiv.appendChild(price);
+
+            return productDiv;
+        }
+
+        // Display products
+        document.addEventListener("DOMContentLoaded", function () {
+            const productsList = document.getElementById("products-list");
+
+            products.forEach(function (product) {
+                const productElement = createProductElement(product);
+                productsList.appendChild(productElement);
             });
         });
 
-        // Keyboard navigation and help popup functionality
-        document.addEventListener("keydown", function (e) {
-            if (e.key === "Tab") {
-                // Trap keyboard focus within the content area
-                const focusableElements = document.querySelectorAll('a, button, input, [tabindex]:not([tabindex="-1"])');
-                const firstFocusable = focusableElements[0];
-                const lastFocusable = focusableElements[focusableElements.length - 1];
-
-                if (!e.shiftKey && document.activeElement === lastFocusable) {
-                    e.preventDefault();
-                    firstFocusable.focus();
-                } else if (e.shiftKey && document.activeElement === firstFocusable) {
-                    e.preventDefault();
-                    lastFocusable.focus();
-                }
-            } else if (e.key === "Enter") {
-                if (document.activeElement === document.getElementById("help-popup-button")) {
-                    // Show/hide help popup
-                    toggleHelpPopup();
-                }
-            } else if (e.key === "Escape") {
-                // Close the help popup when Esc key is pressed
-                closeHelpPopup();
-            }
-        });
-
-        // Help popup elements
-        const helpPopup = document.getElementById("help-popup");
-
-        // JavaScript to toggle the help popup
-        function toggleHelpPopup() {
-            helpPopup.classList.toggle("hidden");
-            if (!helpPopup.classList.contains("hidden")) {
-                helpPopup.focus();
-            } else {
-                document.getElementById("help-popup-button").focus();
-            }
-        }
-
-        // Close the help popup when Esc key is pressed
-        function closeHelpPopup() {
-            helpPopup.classList.add("hidden");
-            document.getElementById("help-popup-button").focus();
-        }
-
-        // Exercise 2
+        // Exercise 2: Functions and Signature Canvas
         const signatureCanvas = document.getElementById("signature-canvas");
         const signatureContext = signatureCanvas.getContext("2d");
         const submitSignatureButton = document.getElementById("submitSignatureButton");
@@ -198,32 +165,28 @@
         signatureCanvas.addEventListener("mousemove", drawSignature);
         let isDrawing = false;
 
-        function drawSignature(e) {
+        const drawSignature = function (e) {
             if (!isDrawing) return;
             signatureContext.lineWidth = 2;
             signatureContext.lineCap = "round";
             signatureContext.strokeStyle = "#000";
             signatureContext.lineTo(e.clientX - signatureCanvas.offsetLeft, e.clientY - signatureCanvas.offsetTop);
             signatureContext.stroke();
-        }
+        };
 
-        signatureCanvas.addEventListener("mousedown", () => {
-            isDrawing = true;
-            signatureContext.beginPath();
-            signatureContext.moveTo(event.clientX - signatureCanvas.offsetLeft, event.clientY - signatureCanvas.offsetTop);
-        });
-
-        signatureCanvas.addEventListener("mouseup", () => {
+        const handleMouseUp = function () {
             isDrawing = false;
-        });
+        };
 
-        submitSignatureButton.addEventListener("click", () => {
-            // Convert the canvas content to an image and submit it (you may want to send it to a server)
+        // Function to submit the signature
+        const submitSignature = function () {
             const signatureImage = signatureCanvas.toDataURL("image/png");
             console.log("Signature data URL:", signatureImage);
-        });
+        };
 
-        // Exercise 3
+        submitSignatureButton.addEventListener("click", submitSignature);
+
+        // Exercise 3: 3D Screensaver using Three.js
         let screensaverTimeout;
 
         function initScreensaver() {
@@ -231,26 +194,8 @@
             const renderer = new THREE.WebGLRenderer({ canvas: screensaverCanvas });
             const scene = new THREE.Scene();
 
-            // Function to animate the screensaver
+            // Create and add your 3D objects to the scene here using Three.js
+
             function animateScreensaver() {
-                // Update animations and render the scene
                 renderer.render(scene, camera);
-                screensaverTimeout = setTimeout(activateScreensaver, 60000); // Set timeout for 1 minute of inactivity
-            }
-
-            // Function to activate the screensaver
-            function activateScreensaver() {
-                clearTimeout(screensaverTimeout);
-                // Display the screensaver and hide other content
-                screensaverCanvas.style.display = "block";
-                document.body.style.overflow = "hidden"; // Hide scrollbars
-                animateScreensaver();
-            }
-
-            activateScreensaver();
-        }
-
-        initScreensaver();
-    </script>
-</body>
-</html>
+                screensaverTimeout = setTimeout(activateScreensaver, 60000); // Set timeout for 
